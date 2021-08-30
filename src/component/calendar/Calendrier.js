@@ -90,12 +90,13 @@ const customStyles = {
       setEndEvent(e.end);
       openModal();
     }
+    
 
     const titleAcces = (e) =>
     <>
       <h4>{e.name}</h4>
-        <p>{e.repar}</p>
-        <p>{e.model} </p>
+      <p>{e.repar}</p>
+      <p>{e.model} </p>
     </>
 
     const handleModal = (e) => {
@@ -118,7 +119,7 @@ const customStyles = {
         if(publicHoliday[i] === (e.getDate()+'/'+ e.getMonth())){
           return {
             style: {
-              backgroundColor: '#F5F5F5', //this works
+              backgroundColor: '#949191', //this works
             }
           }
         }
@@ -127,7 +128,7 @@ const customStyles = {
         if(e.getDay() === 0 || e.getDay() === 6) {
           return {
             style: {
-              backgroundColor: '#F1F1F1', //this works
+              backgroundColor: '#949191', //this works
             }
           }
         }
@@ -136,7 +137,11 @@ const customStyles = {
 
     const breakChangeColor = hours => {
         const startBreak = 1200;
-        const endBreak = 1330;
+        let endBreak = "";
+
+        if(planning.pseudo === "Philippe"){
+          endBreak = 1400
+        }else endBreak = 1330;
 
         const h = hours.getHours();
         const m = hours.getMinutes() === 0 ?  "00" : hours.getMinutes()
@@ -144,7 +149,7 @@ const customStyles = {
         if(horaires >= startBreak && endBreak > horaires )
         return {
             style: {
-              backgroundColor: '#F1F1F1', //this works
+              backgroundColor: '#949191', //this works
             }
           }
     }       
@@ -211,6 +216,18 @@ const customStyles = {
       }else{
         setErrorCreateUser('Minimum 3 lettres')
       }
+    }
+
+    const titleAccesFullCalendar = e => {
+        const repar = e.repar
+        const reparSubstr = repar.substr(0,60).toLowerCase();
+        const name = e.name.toUpperCase();
+
+      return(
+        <>
+          <p>{name} {reparSubstr}{ repar.length > 60 && '...'}</p>
+        </>
+      ) 
     }
     
     return (
@@ -299,15 +316,20 @@ const customStyles = {
                           <p>{detailView.repar}</p>
                           <p>{detailView.num}</p>
                           <p>{detailView.details}</p>
-                          <Delete 
-                            setPlanning={setPlanning}
-                            modalCloseDetails={modalCloseDetails}
-                            userId={planning._id}
-                            eventId={detailView._id}
-                            setLoad={setLoad}
-                            
-                            />
-                          <input type='button' onClick={() => handleChange(detailView)} value='Modifier' />
+                          { !fullCalendar && (
+                            <>
+                              <Delete 
+                                setPlanning={setPlanning}
+                                modalCloseDetails={modalCloseDetails}
+                                userId={planning._id}
+                                eventId={detailView._id}
+                                setLoad={setLoad}
+                                
+                                />
+                              
+                              <input type='button' onClick={() => handleChange(detailView)} value='Modifier' /> 
+                            </>
+                          )}
                           
                       </div>
 
@@ -319,17 +341,18 @@ const customStyles = {
                         <div>
                           <h4>{event.pseudo}</h4>
                           <Calendar
-                            messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", month: 'Mois', week:'Semaine' }}
-                            views={[ 'day' ]}
-                            defaultView={'day'}
+                            messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", month: 'Mois', work_week:'Semaine' }}
+                            views={[ 'work_week' ]}
+                            defaultView={'work_week'}
                             localizer={localizer}
                             events={event.planning.map(mapToRBCFormat)}
                             onSelectSlot={ e => handleSelect(e)}
                             onSelectEvent={e => handleModal(e)}
-                            timeslots={1}
+                            timeslots={2}
+                            step={60}
                             min={minTime}
                             max={maxTime}
-                            titleAccessor={e => titleAcces(e)}
+                            titleAccessor={e => <p className='title_fullcalendar'>{titleAccesFullCalendar(e)}</p>}
                             showMultiDayTimes
                             dayPropGetter={e => calendarStyle(e)}
                             slotPropGetter={e => breakChangeColor(e)}
@@ -346,7 +369,7 @@ const customStyles = {
                               }
                             }
                             formats={deleteHourEvent}
-                            style={{ height: modalIsOpen || modalIsOpenDetails ? '' : '100%' }}
+                            style={{ height: 350 }}
                           />
                         </div>
                         )}
@@ -358,10 +381,10 @@ const customStyles = {
                       <h4 className='pseudo_print_calendar' >{planning.pseudo}</h4>
                       {!modalIsOpen && !modalIsOpenDetails && (
                         <Calendar 
-                          messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", month: 'Mois', week:'Semaine' }}
+                          messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", month: 'Mois', work_week:'Semaine' }}
                           selectable={'ignoreEvents'}
-                          views={[ 'month', 'week' ]}
-                          defaultView={'week'}
+                          views={[ 'month', 'work_week' ]}
+                          defaultView={'work_week'}
                           localizer={localizer}
                           events={planning.planning.map(mapToRBCFormat)}
                           onSelectSlot={ e => handleSelect(e)}
@@ -385,8 +408,8 @@ const customStyles = {
                               };
                             }
                           }
-                          formats={deleteHourEvent}                          
-                          /> 
+                          formats={deleteHourEvent}                     
+                          />
                       )}
                     </>
                   )}

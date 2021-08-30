@@ -61,7 +61,15 @@
 .container_fullCalendar{
     display: flex;
     justify-content: space-evenly;
+    flex-direction: column;
     text-align: center;
+    p{
+        font-size: 10px;
+        margin-top: 0;
+    }
+    h4{
+        margin-top: 0;
+    }
 }
 
 .crossDelete{
@@ -110,6 +118,9 @@
 
 .rbc-calendar{
     height: 1200px;
+}
+.title_fullcalendar{
+    font-size: 6;
 }
 
 @media print{
