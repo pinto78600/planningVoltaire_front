@@ -93,11 +93,11 @@ const customStyles = {
     
 
     const titleAcces = (e) =>
-    <>
+    <div className='title_calendar' >
       <h4>{e.name}</h4>
       <p>{e.repar}</p>
       <p>{e.model} </p>
-    </>
+    </div>
 
     const handleModal = (e) => {
       modalDetails();
