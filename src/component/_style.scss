@@ -128,6 +128,9 @@
 .title_fullcalendar{
     font-size: 6;
 }
+.rbc-row-content{
+    z-index: 0;
+}
 
 @media print{
     .headerCalendar{

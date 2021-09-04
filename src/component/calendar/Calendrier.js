@@ -379,7 +379,6 @@ const customStyles = {
                   (
                     <>
                       <h4 className='pseudo_print_calendar' >{planning.pseudo}</h4>
-                      {!modalIsOpen && !modalIsOpenDetails && (
                         <Calendar 
                           messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", month: 'Mois', work_week:'Semaine' }}
                           selectable={'ignoreEvents'}
@@ -410,7 +409,6 @@ const customStyles = {
                           }
                           formats={deleteHourEvent}                     
                           />
-                      )}
                     </>
                   )}
             </div>
