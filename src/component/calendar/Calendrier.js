@@ -264,7 +264,7 @@ const customStyles = {
                           <>
                             <button data-tip='' data-for='deleteUser' className={planning.pseudo === user.pseudo && 'activeButton'} onClick={() => changeUser(key)} >{user.pseudo}</button> 
                             {planning.pseudo === user.pseudo && (
-                              <ImCross className='crossDelete'  onClick={() => removeUser(user._id)} size='1em'/>
+                              <ImCross className='crossDelete'  onClick={() => removeUser(user._id)} size='0.5em'/>
                               )}
                           </>
                           )
@@ -388,7 +388,7 @@ const customStyles = {
                           events={planning.planning.map(mapToRBCFormat)}
                           onSelectSlot={ e => handleSelect(e)}
                           onSelectEvent={e => handleModal(e)}
-                          timeslots={1}
+                          timeslots={2}
                           min={minTime}
                           max={maxTime}
                           titleAccessor={e => titleAcces(e)}
