@@ -31,7 +31,6 @@ export const getUser = (id) => {
     }
 }
 
-
 export const postEvent = (id, data) => {
     return (dispatch) => {
         return axios({

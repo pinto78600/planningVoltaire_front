@@ -10,10 +10,12 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
     const [num, setNum ] = useState(detail ? detail.num : '');
     const [repar, setRepar] = useState(detail ? detail.repar : '');
     const [details, setDetails] = useState(detail ? detail.details : '');
-    const [color, setColor] = useState(detail ? detail.color : '');
+    const [color, setColor] = useState(detail ? detail.color : '#F0F0F0');
     const [loadPlanning, setLoadPlanning] = useState(false);
     const [start, setStart] = useState(detail ? detail.start : startEvent);
     const [end, setEnd] = useState(detail ? detail.end : endEvent);
+    const [ct, setCt] = useState(detail ? detail.ct : false)
+    const [car, setCar] = useState(detail ? detail.car : false)
 
     const dispatch = useDispatch();
 
@@ -23,7 +25,7 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
         e.preventDefault();
         if(detail){
             const eventId = detail._id;
-            const data = {eventId, name, model, num, repar, details, color, start, end}
+            const data = {eventId, name, model, num, repar, details, color, start, end, ct, car}
             dispatch(editEvent(id, data))
             .then(() => dispatch(getUser(id)))
             .then(() => setLoadPlanning(true))
@@ -32,7 +34,7 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
             setLoadCalendarEdit(false)
         }
         else{
-            const data = {name, model, num, repar, details, color, start, end}
+            const data = {name, model, num, repar, details, color, start, end, ct, car}
             dispatch(postEvent(id, data))
             .then(() => dispatch(getUser(id)))
             .then(() => setLoadPlanning(true))
@@ -51,6 +53,8 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
         setColor('');
         setStart('');
         setEnd('');
+        setCar(false);
+        setCt(false);
     }
 
 
@@ -72,6 +76,7 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
         setStart(e.start);
         setEnd(e.end);
     }
+
 
     return (
         <div>
@@ -138,11 +143,18 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
                         <textarea type='text' name='details' id='details'
                         onChange={e => setDetails(e.target.value)} value={details}/>
                         <br/>
-                        <label for="color">Choisir la couleur:</label>
                         <br/>
+                        <label htmlFor='ct'>CT</label>
+                        <input type="checkbox" name='ct' id='ct'
+                        onChange={e => setCt(e.target.checked)} checked={ct} />
+                        <br/>
+                        <label htmlFor='car'>Prêt véhicule</label>
+                        <input type="checkbox" name='car' id='car'
+                        onChange={e => setCar(e.target.checked)} checked={car} />
+                        <br/>
+                        <label for="color">Choisir la couleur:</label>
                         <select name="color" id="color" onChange={e => setColor(e.target.value)} value={color} >
-                            <option value="">--Choisir une option--</option>
-                            <option value="#191970">Bleu</option>
+                            <option value="#F0F0F0">gris</option>
                             <option value="#008000">Vert</option>
                             <option value="#FF0000">Rouge</option>
                         </select>

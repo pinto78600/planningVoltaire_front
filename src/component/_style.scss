@@ -85,6 +85,7 @@
 
 .btn_print{
     cursor: pointer;
+    margin: 0px 10px 0px 10px;
 }
 .btn_print:hover{
     transform: scale(1.3);
@@ -113,10 +114,22 @@
     display: none;
 }
 
+
 .title_calendar{
     font-size: 12px;
+    color: black;
     h4{
         margin: 0;
+    }
+    div{
+        display: flex;
+        justify-content: space-between;
+    }
+    p{
+        margin-top: 5px;
+    }
+    img{
+        height: 20px;    
     }
 }
 .title_fullcalendar{
@@ -124,6 +137,20 @@
 }
 .rbc-row-content{
     z-index: 0;
+}
+.header_color_ct{
+    background-color: orange;
+}
+.header_color_car{
+    background-color: yellow;
+}
+
+.header_color_ct_car{
+    background: linear-gradient(0.25turn, yellow, #ebf8e1, orange);}
+
+.legend_print{
+    display: flex;
+    align-items: center;
 }
 
 @media print{

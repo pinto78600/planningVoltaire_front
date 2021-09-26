@@ -54,8 +54,6 @@ const customStyles = {
       eventCalendar[user] && setPlanning(eventCalendar[user])
             
     },[eventCalendar, user])
-
-    
         
     const openModal = () => {
       setIsOpenDetails(false)
@@ -90,11 +88,16 @@ const customStyles = {
       setEndEvent(e.end);
       openModal();
     }
-    
 
     const titleAcces = (e) =>
     <div className='title_calendar' >
-      <h4>{e.name}</h4>
+      <div>
+        <h4>{e.name}</h4>
+        <div>
+          {e.car && <img src='car.png' alt='car' />}       
+          {e.ct && <img src='ct.png' alt='ct' />}       
+          </div>
+      </div>
       <p>{e.repar}</p>
       <p>{e.model} </p>
     </div>
@@ -149,7 +152,7 @@ const customStyles = {
         if(horaires >= startBreak && endBreak > horaires )
         return {
             style: {
-              backgroundColor: '#949191', //this works
+              backgroundColor: '#505050', //this works
             }
           }
     }       
@@ -229,6 +232,39 @@ const customStyles = {
         </>
       ) 
     }
+
+    const colorHeaderDate = (props) => {
+      const arrayCt = [];
+      planning.planning.filter(e => e.ct === true).forEach(element => arrayCt.push(new Date(element.start)));
+      let car = '';
+      let ct = '';
+      const arrayCar = [];
+      planning.planning.filter(e => e.car === true).forEach(element => arrayCar.push(new Date(element.start)));
+      
+      if(!isEmpty(arrayCt)){
+        for(let i = 0 ; i < arrayCt.length; i++){
+          if(arrayCt[i].getDate() + '/' + arrayCt[0].getMonth() === props.date.getDate() + '/' + arrayCt[0].getMonth()){
+            ct = '_ct'
+          }
+        };
+      }
+      
+      if(!isEmpty(arrayCar)){
+        for(let i = 0 ; i < arrayCar.length; i++){
+          if(arrayCar[i].getDate() + '/' + arrayCar[0].getMonth() === props.date.getDate() + '/' + arrayCar[0].getMonth()){
+            car= '_car'
+          }
+        };
+      }
+      let style = `header_color${ct + car}`;
+
+
+      return(
+        <div className={style}  >
+          {props.label}
+        </div>
+      )
+    }
     
     return (
       <div>
@@ -274,7 +310,11 @@ const customStyles = {
                         
                     </div>
                       <button onClick={ () => setFullCalendar(!fullCalendar)}>{!fullCalendar ? 'Complet' : 'Individuel'}</button>
-                      <BiPrinter className='btn_print'  onClick={() => window.print() } size='2em' />
+                      <div className='legend_print'>
+                        <div style={{ backgroundColor : 'orange'}}>CT</div>
+                        <BiPrinter className='btn_print'  onClick={() => window.print() } size='2em' />
+                        <div style={{ backgroundColor : 'yellow'}}>CAR</div>
+                      </div>
                   </div>
                   <Modal
                     isOpen={modalIsOpen}
@@ -316,6 +356,8 @@ const customStyles = {
                           <p>{detailView.repar}</p>
                           <p>{detailView.num}</p>
                           <p>{detailView.details}</p>
+                          {detailView.ct && <p>Controle technique</p>}
+                          {detailView.car && <p>Prêt véhicule</p>}
                           { !fullCalendar && (
                             <>
                               <Delete 
@@ -407,7 +449,12 @@ const customStyles = {
                               };
                             }
                           }
-                          formats={deleteHourEvent}                     
+                          formats={deleteHourEvent}
+                          components={{
+                            work_week:{
+                              header: colorHeaderDate,
+                            }
+                          }}
                           />
                     </>
                   )}
