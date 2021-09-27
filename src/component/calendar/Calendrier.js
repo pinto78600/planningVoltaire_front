@@ -96,11 +96,31 @@ const customStyles = {
         <div>
           {e.car && <img src='car.png' alt='car' />}       
           {e.ct && <img src='ct.png' alt='ct' />}       
-          </div>
+        </div>
       </div>
       <p>{e.repar}</p>
       <p>{e.model} </p>
-    </div>
+    </div>   
+    
+    const titleAccesFullCalendar = e => {
+        const repar = e.repar
+        const reparSubstr = repar.substr(0,60).toLowerCase();
+        const name = e.name.toUpperCase();
+
+      return(
+        <div className='title_fullcalendar'>
+          <div>
+            <p>{name}</p> 
+            <div>
+              {e.car && <img src='car.png' alt='car' />}   
+              {e.ct && <img src='ct.png' alt='ct' />}
+            </div>
+          </div>
+          <p>{reparSubstr}{ repar.length > 60 && '...'}</p>
+        </div>
+      ) 
+    }
+
 
     const handleModal = (e) => {
       modalDetails();
@@ -114,6 +134,20 @@ const customStyles = {
     }
 
     const calendarStyle = (e) => {
+
+      const arrayAllday = [];
+      planning.planning.filter(e => e.name === 'test').forEach(element => arrayAllday.push(element));
+
+      // console.log(new Date(arrayAllday[0].start));
+
+      // while(new Date(arrayAllday[0].start).getDate() === e.getDate()-1){
+      //   return {
+      //     style: {
+      //       backgroundColor: '#949191', //this works
+      //     }
+      //   }
+      // }
+
       const publicHoliday = [
         '1/0', '5/3', '1/4', '8/4', '13/4', '24/4', '14/6', '15/7', '1/10', '11/10', '25/11' 
       ]
@@ -221,17 +255,6 @@ const customStyles = {
       }
     }
 
-    const titleAccesFullCalendar = e => {
-        const repar = e.repar
-        const reparSubstr = repar.substr(0,60).toLowerCase();
-        const name = e.name.toUpperCase();
-
-      return(
-        <>
-          <p>{name} {reparSubstr}{ repar.length > 60 && '...'}</p>
-        </>
-      ) 
-    }
 
     const colorHeaderDate = (props) => {
       const arrayCt = [];
@@ -394,7 +417,7 @@ const customStyles = {
                             step={60}
                             min={minTime}
                             max={maxTime}
-                            titleAccessor={e => <p className='title_fullcalendar'>{titleAccesFullCalendar(e)}</p>}
+                            titleAccessor={e => titleAccesFullCalendar(e)}
                             showMultiDayTimes
                             dayPropGetter={e => calendarStyle(e)}
                             slotPropGetter={e => breakChangeColor(e)}
@@ -412,6 +435,11 @@ const customStyles = {
                             }
                             formats={deleteHourEvent}
                             style={{ height: 350 }}
+                            // components={{
+                            //   work_week:{
+                            //     header: colorHeaderDate,
+                            //   }
+                            // }}
                           />
                         </div>
                         )}

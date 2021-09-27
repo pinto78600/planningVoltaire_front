@@ -133,7 +133,18 @@
     }
 }
 .title_fullcalendar{
-    font-size: 6;
+    font-size: 6px;
+    color: black;
+    img{
+        height: 15px;    
+    }
+     div{
+        display: flex;
+        justify-content: space-between;
+    }
+    p{
+        margin: 3px;
+    }
 }
 .rbc-row-content{
     z-index: 0;
