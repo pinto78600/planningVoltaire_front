@@ -16,7 +16,7 @@ import Delete from './Delete';
 
 import '../index.scss';
 import axios from 'axios';
-import { editColor, editEvent } from '../../actions/users.actions';
+import { editEvent } from '../../actions/users.actions';
 
 const localizer = momentLocalizer(moment);
 
@@ -49,6 +49,7 @@ const customStyles = {
     const [pseudo, setPseudo] = useState('');
     const [displayInputUser, setDisplayInputUser] = useState(false);
     const [errorCreateUser, setErrorCreateUser] = useState('');
+    const [color, setColor] = useState('#F0F0F0');
 
     const dispatch = useDispatch();
 
@@ -244,19 +245,9 @@ const customStyles = {
       }
     }
 
-    const handleChangeColor = (id, color) => {
-        axios({
-          method: 'put',
-          url:`${process.env.REACT_APP_API_URL}api/${id}`,
-          'Access-Control-Allow-Credentials': true,
-          data: {color}
-        })
-        .then(res => {
-          console.log(res.data);
-        })
-        .catch(err => {
-          console.log(err);
-        })
+    const handleChangeColor = (e) => {
+      e.preventDefault();
+      dispatch(editEvent('614441b4b10e9300233baf10', color))
     }
 
 
@@ -375,9 +366,16 @@ const customStyles = {
                     <div>
                           <h2>{detailView.name}</h2>
                           <div >
-                            <button style={{ backgroundColor : '#7b7a7a'}}  onClick={() => handleChangeColor(detailView._id, "#7b7a7a" ) }>Annuler</button>
-                            <button>Attente</button>
-                            <button style={{ backgroundColor : 'yellow' }} >Arriver</button>
+                            <form action='' onSubmit={handleChangeColor}>
+                              <select name="color" id="color" onChange={e => setColor(e.target.value)} value={color} >
+                                <option value="#7b7a7a">Annuler</option>
+                                <option value="#F0F0F0">En attente</option>
+                                <option value="#FFD700">Arriver</option>
+                              </select>
+                              <br/>
+                                <input type='submit' value='Envoyer' />
+                              <br/>
+                            </form>
                           </div>
                           <p>{detailView.start.getHours()}h
                           { detailView.start.getMinutes() === 0 ?  "" : detailView.start.getMinutes()  } -
