@@ -222,6 +222,23 @@ const customStyles = {
         })
     }}
 
+    const handleChangeColor = color => {
+      axios({
+        method: 'put',
+        url:`${process.env.REACT_APP_API_URL}api/color`,
+        'Access-Control-Allow-Credentials': true,
+        data: {color}
+      })
+      .then(res => {
+        if(res.data) {
+          console.log(res.data);
+        };
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
+
     const handleCreateUser = e => {
       e.preventDefault()
       if(pseudo.length >= 3 ){
@@ -360,7 +377,7 @@ const customStyles = {
                     <div>
                           <h2>{detailView.name}</h2>
                           <div >
-                            <button style={{ backgroundColor : '#7b7a7a'}}  onClick={() => dispatch(editColor(detailView._id, "#7b7a7a" )) }>Annuler</button>
+                            <button style={{ backgroundColor : '#7b7a7a'}}  onClick={() => handleChangeColor("#7b7a7a") }>Annuler</button>
                             <button>Attente</button>
                             <button style={{ backgroundColor : 'yellow' }} >Arriver</button>
                           </div>
