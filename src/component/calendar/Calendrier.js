@@ -16,7 +16,7 @@ import Delete from './Delete';
 
 import '../index.scss';
 import axios from 'axios';
-import { editColor } from '../../actions/users.actions';
+import { editColor, editEvent } from '../../actions/users.actions';
 
 const localizer = momentLocalizer(moment);
 
@@ -360,7 +360,7 @@ const customStyles = {
                     <div>
                           <h2>{detailView.name}</h2>
                           <div >
-                            <button style={{ backgroundColor : '#7b7a7a'}}  onClick={() => dispatch(editColor(detailView._id, "#7b7a7a" )) }>Annuler</button>
+                            <button style={{ backgroundColor : '#7b7a7a'}}  onClick={() => dispatch(editEvent(detailView._id, "#7b7a7a" )) }>Annuler</button>
                             <button>Attente</button>
                             <button style={{ backgroundColor : 'yellow' }} >Arriver</button>
                           </div>
