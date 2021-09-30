@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment';
 import localization from 'moment/locale/fr';
@@ -16,7 +16,6 @@ import Delete from './Delete';
 
 import '../index.scss';
 import axios from 'axios';
-import { editEvent } from '../../actions/users.actions';
 
 const localizer = momentLocalizer(moment);
 
@@ -28,7 +27,7 @@ const customStyles = {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      backgroundColor : '#f0f0f0',
+      backgroundColor : '#FFFF00',
     },
   };
 
@@ -49,9 +48,7 @@ const customStyles = {
     const [pseudo, setPseudo] = useState('');
     const [displayInputUser, setDisplayInputUser] = useState(false);
     const [errorCreateUser, setErrorCreateUser] = useState('');
-    const [color, setColor] = useState('#F0F0F0');
 
-    const dispatch = useDispatch();
 
     useEffect(() => {
       eventCalendar[user] && setPlanning(eventCalendar[user])
@@ -245,11 +242,6 @@ const customStyles = {
       }
     }
 
-    const handleChangeColor = (e) => {
-      e.preventDefault();
-      dispatch(editEvent('614441b4b10e9300233baf10', color))
-    }
-
 
     const colorHeaderDate = (props) => {
       const arrayCt = [];
@@ -365,18 +357,6 @@ const customStyles = {
                   { !isEmpty(detailView) && (
                     <div>
                           <h2>{detailView.name}</h2>
-                          <div >
-                            <form action='' onSubmit={handleChangeColor}>
-                              <select name="color" id="color" onChange={e => setColor(e.target.value)} value={color} >
-                                <option value="#7b7a7a">Annuler</option>
-                                <option value="#F0F0F0">En attente</option>
-                                <option value="#FFD700">Arriver</option>
-                              </select>
-                              <br/>
-                                <input type='submit' value='Envoyer' />
-                              <br/>
-                            </form>
-                          </div>
                           <p>{detailView.start.getHours()}h
                           { detailView.start.getMinutes() === 0 ?  "" : detailView.start.getMinutes()  } -
                           {detailView.end.getHours()}h
@@ -396,7 +376,8 @@ const customStyles = {
                                 userId={planning._id}
                                 eventId={detailView._id}
                                 setLoad={setLoad}
-                              />
+                                
+                                />
                               
                               <input type='button' onClick={() => handleChange(detailView)} value='Modifier' /> 
                             </>
@@ -441,11 +422,11 @@ const customStyles = {
                             }
                             formats={deleteHourEvent}
                             style={{ height: 350 }}
-                            components={{
-                              work_week:{
-                                header: colorHeaderDate,
-                              }
-                            }}
+                            // components={{
+                            //   work_week:{
+                            //     header: colorHeaderDate,
+                            //   }
+                            // }}
                           />
                         </div>
                         )}
