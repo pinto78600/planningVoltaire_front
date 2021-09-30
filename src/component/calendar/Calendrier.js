@@ -222,10 +222,10 @@ const customStyles = {
         })
     }}
 
-    const handleChangeColor = color => {
+    const handleChangeColor = (id, color) => {
       axios({
         method: 'put',
-        url:`${process.env.REACT_APP_API_URL}api/color`,
+        url:`${process.env.REACT_APP_API_URL}api/color/${id}`,
         'Access-Control-Allow-Credentials': true,
         data: {color}
       })
@@ -377,7 +377,7 @@ const customStyles = {
                     <div>
                           <h2>{detailView.name}</h2>
                           <div >
-                            <button style={{ backgroundColor : '#7b7a7a'}}  onClick={() => handleChangeColor("#7b7a7a") }>Annuler</button>
+                            <button style={{ backgroundColor : '#7b7a7a'}}  onClick={() => handleChangeColor( detailView._id, "#7b7a7a") }>Annuler</button>
                             <button>Attente</button>
                             <button style={{ backgroundColor : 'yellow' }} >Arriver</button>
                           </div>
