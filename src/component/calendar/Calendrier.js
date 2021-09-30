@@ -244,6 +244,21 @@ const customStyles = {
       }
     }
 
+    const handleChangeColor = (id, color) => {
+        axios({
+          method: 'put',
+          url:`${process.env.REACT_APP_API_URL}api/${id}`,
+          'Access-Control-Allow-Credentials': true,
+          data: {color}
+        })
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+
 
     const colorHeaderDate = (props) => {
       const arrayCt = [];
@@ -360,7 +375,7 @@ const customStyles = {
                     <div>
                           <h2>{detailView.name}</h2>
                           <div >
-                            <button style={{ backgroundColor : '#7b7a7a'}}  onClick={() => dispatch(editEvent(detailView._id, "#7b7a7a" )) }>Annuler</button>
+                            <button style={{ backgroundColor : '#7b7a7a'}}  onClick={() => handleChangeColor(detailView._id, "#7b7a7a" ) }>Annuler</button>
                             <button>Attente</button>
                             <button style={{ backgroundColor : 'yellow' }} >Arriver</button>
                           </div>
