@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment';
 import localization from 'moment/locale/fr';
@@ -16,6 +16,7 @@ import Delete from './Delete';
 
 import '../index.scss';
 import axios from 'axios';
+import { editColor } from '../../actions/users.actions';
 
 const localizer = momentLocalizer(moment);
 
@@ -27,7 +28,7 @@ const customStyles = {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      backgroundColor : '#FFFF00',
+      backgroundColor : '#f0f0f0',
     },
   };
 
@@ -49,6 +50,7 @@ const customStyles = {
     const [displayInputUser, setDisplayInputUser] = useState(false);
     const [errorCreateUser, setErrorCreateUser] = useState('');
 
+    const dispatch = useDispatch();
 
     useEffect(() => {
       eventCalendar[user] && setPlanning(eventCalendar[user])
@@ -134,19 +136,6 @@ const customStyles = {
     }
 
     const calendarStyle = (e) => {
-
-      const arrayAllday = [];
-      planning.planning.filter(e => e.name === 'test').forEach(element => arrayAllday.push(element));
-
-      // console.log(new Date(arrayAllday[0].start));
-
-      // while(new Date(arrayAllday[0].start).getDate() === e.getDate()-1){
-      //   return {
-      //     style: {
-      //       backgroundColor: '#949191', //this works
-      //     }
-      //   }
-      // }
 
       const publicHoliday = [
         '1/0', '5/3', '1/4', '8/4', '13/4', '24/4', '14/6', '15/7', '1/10', '11/10', '25/11' 
@@ -370,6 +359,11 @@ const customStyles = {
                   { !isEmpty(detailView) && (
                     <div>
                           <h2>{detailView.name}</h2>
+                          <div >
+                            <button style={{ backgroundColor : '#7b7a7a'}}  onClick={() => dispatch(editColor(detailView._id, "#7b7a7a" )) }>Annuler</button>
+                            <button>Attente</button>
+                            <button style={{ backgroundColor : 'yellow' }} >Arriver</button>
+                          </div>
                           <p>{detailView.start.getHours()}h
                           { detailView.start.getMinutes() === 0 ?  "" : detailView.start.getMinutes()  } -
                           {detailView.end.getHours()}h
@@ -389,8 +383,7 @@ const customStyles = {
                                 userId={planning._id}
                                 eventId={detailView._id}
                                 setLoad={setLoad}
-                                
-                                />
+                              />
                               
                               <input type='button' onClick={() => handleChange(detailView)} value='Modifier' /> 
                             </>
@@ -435,11 +428,11 @@ const customStyles = {
                             }
                             formats={deleteHourEvent}
                             style={{ height: 350 }}
-                            // components={{
-                            //   work_week:{
-                            //     header: colorHeaderDate,
-                            //   }
-                            // }}
+                            components={{
+                              work_week:{
+                                header: colorHeaderDate,
+                              }
+                            }}
                           />
                         </div>
                         )}

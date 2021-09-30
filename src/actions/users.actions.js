@@ -3,9 +3,10 @@ import axios from 'axios';
 export const GET_USERS = "GET_USERS";
 export const POST_EVENT  = "POST_EVENT";
 export const GET_USER = "GET_USER";
-export const DELETE_EVENT = 'DELETE_EVENT';
-export const EDIT_EVENT = 'EDIT_EVENT';
-export const DELETE_USER = 'DELETE_USER';
+export const DELETE_EVENT = "DELETE_EVENT";
+export const EDIT_EVENT = "EDIT_EVENT";
+export const DELETE_USER = "DELETE_USER";
+export const EDIT_COLOR= "EDIT_COLOR";
 
 export const getUsers = () => {
     return (dispatch) => {
@@ -71,6 +72,22 @@ export const editEvent = (userId, data) =>{
         .then(res => {
             if(res.data.errors){
                 dispatch({type: EDIT_EVENT, payload : res.data.errors})
+            }
+        })
+        .catch(err => console.log(err));
+    }
+}
+
+export const editColor = (userId, color) => {
+    return (dispatch) => {
+        return axios({
+            method: 'put',
+            url: `${process.env.REACT_APP_API_URL}api/color/${userId}`,
+            data: {color}
+        })
+        .then(res => {
+            if(res.data.errors){
+                dispatch({type: EDIT_COLOR, payload : res.data.errors})
             }
         })
         .catch(err => console.log(err));
