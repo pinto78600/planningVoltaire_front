@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment';
 import localization from 'moment/locale/fr';
@@ -16,6 +16,7 @@ import Delete from './Delete';
 
 import '../index.scss';
 import axios from 'axios';
+import { editColor } from '../../actions/users.actions';
 
 const localizer = momentLocalizer(moment);
 
@@ -34,6 +35,8 @@ const customStyles = {
   const Calendrier = () => {
     
     const eventCalendar = useSelector(state => state.usersReducer);
+
+    const dispatch = useDispatch();
     
     const [modalIsOpen, setIsOpen] = useState(false);
     const [startEvent, setStartEvent] = useState();
@@ -47,7 +50,8 @@ const customStyles = {
     const [fullCalendar, setFullCalendar] = useState(false);
     const [pseudo, setPseudo] = useState('');
     const [displayInputUser, setDisplayInputUser] = useState(false);
-    const [errorCreateUser, setErrorCreateUser] = useState('');
+    const [errorCreateUser, setErrorCreateUser] = useState('#FFFF00');
+    const [color, setColor] = useState()
 
 
     useEffect(() => {
@@ -218,7 +222,13 @@ const customStyles = {
         .catch(err => {
           console.log(err);
         })
-    }}
+    }};
+
+    const handleChangeColor = (userId, color) => {
+      // e.preventDefault();
+      console.log(detailView);
+      // dispatch(editColor(userId, color));
+    }
 
     const handleCreateUser = e => {
       e.preventDefault()
@@ -357,6 +367,15 @@ const customStyles = {
                   { !isEmpty(detailView) && (
                     <div>
                           <h2>{detailView.name}</h2>
+                          <div>
+                            <form action='' onSubmit={handleChangeColor} >
+                              <select name="color" id="color" onChange={e => setColor(e.target.value)} value={color} >
+                                <option value="#F0F0F0">En attente</option>
+                                <option value="#928f8f">Annuler</option>
+                                <option value="#FFD700">Arriver</option>
+                              </select>
+                            </form>
+                          </div>
                           <p>{detailView.start.getHours()}h
                           { detailView.start.getMinutes() === 0 ?  "" : detailView.start.getMinutes()  } -
                           {detailView.end.getHours()}h

@@ -155,7 +155,6 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
                         <label for="color">Choisir la couleur:</label>
                         <select name="color" id="color" onChange={e => setColor(e.target.value)} value={color} >
                             <option value="#F0F0F0">gris</option>
-                            <option value="#008000">Vert</option>
                             <option value="#FF0000">Rouge</option>
                         </select>
                         <br/>
