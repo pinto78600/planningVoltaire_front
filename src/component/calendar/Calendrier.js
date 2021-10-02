@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment';
 import localization from 'moment/locale/fr';
@@ -13,10 +13,10 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { isEmpty } from '../Utils';
 import Form from './Form';
 import Delete from './Delete';
+import ChangeColor from './ChangeColor';
 
 import '../index.scss';
 import axios from 'axios';
-import { editColor } from '../../actions/users.actions';
 
 const localizer = momentLocalizer(moment);
 
@@ -35,8 +35,6 @@ const customStyles = {
   const Calendrier = () => {
     
     const eventCalendar = useSelector(state => state.usersReducer);
-
-    const dispatch = useDispatch();
     
     const [modalIsOpen, setIsOpen] = useState(false);
     const [startEvent, setStartEvent] = useState();
@@ -50,9 +48,7 @@ const customStyles = {
     const [fullCalendar, setFullCalendar] = useState(false);
     const [pseudo, setPseudo] = useState('');
     const [displayInputUser, setDisplayInputUser] = useState(false);
-    const [errorCreateUser, setErrorCreateUser] = useState('#FFFF00');
-    const [color, setColor] = useState()
-
+    const [errorCreateUser, setErrorCreateUser] = useState('');
 
     useEffect(() => {
       eventCalendar[user] && setPlanning(eventCalendar[user])
@@ -63,14 +59,16 @@ const customStyles = {
       setIsOpenDetails(false)
       setIsOpen(true);
     }
+    
     const modalDetails = () => {
       setIsOpen(false);
-        setIsOpenDetails(true);
-      }
+      setIsOpenDetails(true);
+    }
+    
     const modalCloseDetails = () => {
         setIsOpenDetails(false);
         eraseValues();
-      }
+    }
     
     const closeModal = () => {
       setIsOpen(false);
@@ -224,12 +222,6 @@ const customStyles = {
         })
     }};
 
-    const handleChangeColor = (userId, color) => {
-      // e.preventDefault();
-      console.log(detailView);
-      // dispatch(editColor(userId, color));
-    }
-
     const handleCreateUser = e => {
       e.preventDefault()
       if(pseudo.length >= 3 ){
@@ -367,15 +359,13 @@ const customStyles = {
                   { !isEmpty(detailView) && (
                     <div>
                           <h2>{detailView.name}</h2>
-                          <div>
-                            <form action='' onSubmit={handleChangeColor} >
-                              <select name="color" id="color" onChange={e => setColor(e.target.value)} value={color} >
-                                <option value="#F0F0F0">En attente</option>
-                                <option value="#928f8f">Annuler</option>
-                                <option value="#FFD700">Arriver</option>
-                              </select>
-                            </form>
-                          </div>
+                          <ChangeColor 
+                            detailView={detailView} 
+                            id={planning._id} 
+                            modalCloseDetails={modalCloseDetails} 
+                            setLoad={setLoad}
+                            setPlanning={setPlanning} 
+                          />
                           <p>{detailView.start.getHours()}h
                           { detailView.start.getMinutes() === 0 ?  "" : detailView.start.getMinutes()  } -
                           {detailView.end.getHours()}h

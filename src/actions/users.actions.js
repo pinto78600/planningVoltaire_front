@@ -77,12 +77,12 @@ export const editEvent = (userId, data) =>{
         .catch(err => console.log(err));
     }
 }
-export const editColor = (userId, color) =>{
+export const editColor = (userId, data) =>{
     return (dispatch) => {
         return axios({
             method: 'put',
             url: `${process.env.REACT_APP_API_URL}api/color/${userId}`,
-            data: {color}
+            data: {data}
         })
         .then(res => {
             if(res.data.errors){
