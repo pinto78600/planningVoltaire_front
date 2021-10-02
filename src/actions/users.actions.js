@@ -81,7 +81,7 @@ export const editColor = (userId, color) =>{
     return (dispatch) => {
         return axios({
             method: 'put',
-            url: `${process.env.REACT_APP_API_URL}api/color/${userId}`,
+            url: `${process.env.REACT_APP_API_URL}config/${userId}`,
             data: {color}
         })
         .then(res => {
