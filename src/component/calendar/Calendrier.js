@@ -246,12 +246,15 @@ const customStyles = {
 
 
     const colorHeaderDate = (props) => {
+
       const arrayCt = [];
-      planning.planning.filter(e => e.ct === true).forEach(element => arrayCt.push(new Date(element.start)));
+      const arrayCar = [];
+      for(let i = 0 ; i < eventCalendar.length ; i++){
+        eventCalendar[i].planning.filter(e => e.ct === true).forEach(element => arrayCt.push(new Date(element.start)));
+        eventCalendar[i].planning.filter(e => e.car === true).forEach(element => arrayCar.push(new Date(element.start)));
+      }
       let car = '';
       let ct = '';
-      const arrayCar = [];
-      planning.planning.filter(e => e.car === true).forEach(element => arrayCar.push(new Date(element.start)));
       
       if(!isEmpty(arrayCt)){
         for(let i = 0 ; i < arrayCt.length; i++){
@@ -270,6 +273,7 @@ const customStyles = {
       }
       let style = `header_color${ct + car}`;
 
+      
 
       return(
         <div className={style}  >
@@ -277,6 +281,8 @@ const customStyles = {
         </div>
       )
     }
+
+    
     
     return (
       <div>
@@ -431,11 +437,11 @@ const customStyles = {
                             }
                             formats={deleteHourEvent}
                             style={{ height: 350 }}
-                            // components={{
-                            //   work_week:{
-                            //     header: colorHeaderDate,
-                            //   }
-                            // }}
+                            components={{
+                              work_week:{
+                                header: colorHeaderDate,
+                              }
+                            }}
                           />
                         </div>
                         )}
