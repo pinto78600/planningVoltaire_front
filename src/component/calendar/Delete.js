@@ -6,12 +6,15 @@ const Delete = ({ setPlanning, modalCloseDetails, userId, eventId, setLoad }) =>
 
     let userPlanning = useSelector(state => state.userReducer);
 
-    const [loadPlanning, setLoadPlanning] = useState(false)
+    const [loadPlanning, setLoadPlanning] = useState(false);
+    const [loading, setLoading] = useState(false);
+
 
     const dispatch = useDispatch();
 
     const handleDelete = () => {
         if(window.confirm('Voulez-vous supprimer cet événement ?')){
+            setLoading(true);
             dispatch(deleteEvent(userId, eventId))
             .then(() => dispatch(getUser(userId)))
             .then(() => setLoadPlanning(true))
@@ -31,7 +34,15 @@ const Delete = ({ setPlanning, modalCloseDetails, userId, eventId, setLoad }) =>
     
     return (
         <div>
-            <button onClick={() => handleDelete()} >Supprimer</button>
+            {loading ? (
+                <div className='icon' >
+                    <i className='fas fa-spinner fa-pulse'></i>
+                </div> 
+            )
+            :
+            (
+                <button onClick={() => handleDelete()} >Supprimer</button>
+            )}
         </div>
     );
 };

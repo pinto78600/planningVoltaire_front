@@ -164,6 +164,44 @@
     align-items: center;
 }
 
+.icon {
+    margin: 16px auto;
+    width: 100%;
+    text-align: center;
+    i {
+      font-size: 1.6rem;
+      color: black;
+    }
+}
+.fas{
+    color: red;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.fa-spinner {
+    top: 40%;
+    left: 49%;
+    font-size: 1.5rem;
+    color: red;
+}
+.fa-pulse{
+    animation: fa-spin 1s infinite steps(8);
+}
+.fa-spinner:before {
+    content: "\f110";
+}
+
+.closeModal{
+    float: right;
+    cursor: pointer;
+}
+
+.button_modify_end_modal{
+    display: flex;
+    justify-content: space-between;
+}
+
 @media print{
     .headerCalendar{
         display: none;

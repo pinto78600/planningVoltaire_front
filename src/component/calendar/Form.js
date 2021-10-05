@@ -14,8 +14,10 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
     const [loadPlanning, setLoadPlanning] = useState(false);
     const [start, setStart] = useState(detail ? detail.start : startEvent);
     const [end, setEnd] = useState(detail ? detail.end : endEvent);
-    const [ct, setCt] = useState(detail ? detail.ct : false)
-    const [car, setCar] = useState(detail ? detail.car : false)
+    const [ct, setCt] = useState(detail ? detail.ct : false);
+    const [car, setCar] = useState(detail ? detail.car : false);
+    const [urgent, setUrgent] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -23,6 +25,7 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
     
     const handleForm = async(e) => {
         e.preventDefault();
+        setLoading(true);
         if(detail){
             const eventId = detail._id;
             const data = {eventId, name, model, num, repar, details, color, start, end, ct, car}
@@ -63,8 +66,12 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
            setPlanning(userPlanning);
            setLoadPlanning(false)
        }
-    },[userPlanning, dispatch, loadPlanning, setPlanning])
 
+       urgent ? setColor('#FF0000') : setColor('#F0F0F0'); 
+
+       
+    },[userPlanning, dispatch, loadPlanning, setPlanning, urgent])
+    
     const localizer = momentLocalizer(moment);
 
     const mapToRBCFormat = e => Object.assign({}, e, {
@@ -79,7 +86,15 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
 
 
     return (
-        <div>
+        <div className='container_form_new_event'>
+            { loading ? (
+                <div className='icon' >
+                    <i className='fas fa-spinner fa-pulse'></i>
+                </div> 
+            )
+            :
+            (
+
              <form action='' onSubmit={handleForm} autoComplete='off' >
                  { loadCalendarEdit && (
                      <Calendar
@@ -143,25 +158,22 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
                         <textarea type='text' name='details' id='details'
                         onChange={e => setDetails(e.target.value)} value={details}/>
                         <br/>
-                        <br/>
-                        <label htmlFor='ct'>CT</label>
                         <input type="checkbox" name='ct' id='ct'
                         onChange={e => setCt(e.target.checked)} checked={ct} />
+                        <label htmlFor='ct'>CT</label>
                         <br/>
-                        <label htmlFor='car'>Prêt véhicule</label>
                         <input type="checkbox" name='car' id='car'
                         onChange={e => setCar(e.target.checked)} checked={car} />
+                        <label htmlFor='car'>Prêt véhicule</label>
                         <br/>
-                        <label for="color">Choisir la couleur:</label>
-                        <select name="color" id="color" onChange={e => setColor(e.target.value)} value={color} >
-                            <option value="#F0F0F0">gris</option>
-                            <option value="#FF0000">Rouge</option>
-                        </select>
+                        <input type='checkbox' id='urgent' name='urgent' onChange={e => setUrgent(e.target.checked)} />
+                        <label for="urgent" >Urgent</label>
                         <br/>
                         <input type='submit' value='Envoyer' />
                         <br/>
                     </div>
                 </form>
+            )}
         </div>
     );
 };

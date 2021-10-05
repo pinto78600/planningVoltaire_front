@@ -305,7 +305,9 @@ const customStyles = {
         </div>
           {
             isEmpty(planning) ? (
-              <p>Loading...</p>
+              <div className='icon' >
+                <i className='fas fa-spinner fa-pulse'></i>
+              </div>
               )
               :
               (                
@@ -340,6 +342,7 @@ const customStyles = {
                     style={customStyles}
                     
                     >
+                    <ImCross className='closeModal' onClick={closeModal} size='1em'/>
                     <h2>Prise de rendez-vous</h2>
                     <Form 
                       id={planning._id} 
@@ -355,7 +358,6 @@ const customStyles = {
                       setLoadCalendarEdit={setLoadCalendarEdit}
                       loadCalendarEdit={loadCalendarEdit}
                       />
-                    <button onClick={closeModal}>Fermer</button>
                   </Modal>
                   <Modal
                     isOpen={modalIsOpenDetails}
@@ -364,6 +366,7 @@ const customStyles = {
                   >
                   { !isEmpty(detailView) && (
                     <div>
+                          <ImCross className='closeModal' onClick={modalCloseDetails} size='1em'/>
                           <h2>{detailView.name}</h2>
                           <ChangeColor 
                             detailView={detailView} 
@@ -384,7 +387,7 @@ const customStyles = {
                           {detailView.ct && <p>Controle technique</p>}
                           {detailView.car && <p>Prêt véhicule</p>}
                           { !fullCalendar && (
-                            <>
+                            <div className='button_modify_end_modal' >
                               <Delete 
                                 setPlanning={setPlanning}
                                 modalCloseDetails={modalCloseDetails}
@@ -395,7 +398,7 @@ const customStyles = {
                                 />
                               
                               <input type='button' onClick={() => handleChange(detailView)} value='Modifier' /> 
-                            </>
+                            </div>
                           )}
                           
                       </div>
