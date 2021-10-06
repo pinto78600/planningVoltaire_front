@@ -54,6 +54,9 @@ const customStyles = {
       eventCalendar[user] && setPlanning(eventCalendar[user])
             
     },[eventCalendar, user])
+
+   
+
         
     const openModal = () => {
       setIsOpenDetails(false)
@@ -140,7 +143,7 @@ const customStyles = {
       const publicHoliday = [
         '1/0', '5/3', '1/4', '8/4', '13/4', '24/4', '14/6', '15/7', '1/10', '11/10', '25/11' 
       ]
-
+      
       for(let i = 0 ; i < publicHoliday.length ; i++){
         if(publicHoliday[i] === (e.getDate()+'/'+ e.getMonth())){
           return {
@@ -150,16 +153,15 @@ const customStyles = {
           }
         }
       }
-
-        if(e.getDay() === 0 || e.getDay() === 6) {
-          return {
-            style: {
-              backgroundColor: '#949191', //this works
-            }
+      
+      if(e.getDay() === 0 || e.getDay() === 6) {
+        return {
+          style: {
+            backgroundColor: '#949191', //this works
           }
         }
-
-    }  
+      }
+    }
 
     const breakChangeColor = hours => {
         const startBreak = 1200;
@@ -258,19 +260,19 @@ const customStyles = {
       
       if(!isEmpty(arrayCt)){
         for(let i = 0 ; i < arrayCt.length; i++){
-          if(arrayCt[i].getDate() + '/' + arrayCt[0].getMonth() === props.date.getDate() + '/' + arrayCt[0].getMonth()){
-            ct = '_ct'
+          if(arrayCt[i].getDate() + '/' + arrayCt[i].getMonth() === props.date.getDate() + '/' + props.date.getMonth()){
+            ct = '_ct';
           }
         };
-      }
+      }else ct ='';
       
       if(!isEmpty(arrayCar)){
         for(let i = 0 ; i < arrayCar.length; i++){
-          if(arrayCar[i].getDate() + '/' + arrayCar[0].getMonth() === props.date.getDate() + '/' + arrayCar[0].getMonth()){
-            car= '_car'
+          if(arrayCar[i].getDate() + '/' + arrayCar[i].getMonth() === props.date.getDate() + '/' + props.date.getMonth()){
+            car= '_car';
           }
         };
-      }
+      }else car = '';
       let style = `header_color${ct + car}`;
 
       
@@ -411,7 +413,7 @@ const customStyles = {
                         <div>
                           <h4>{event.pseudo}</h4>
                           <Calendar
-                            messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", month: 'Mois', work_week:'Semaine' }}
+                            messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", month: 'Mois', work_week:'Semaine', allDay:'Jounée complete' }}
                             views={[ 'work_week' ]}
                             defaultView={'work_week'}
                             localizer={localizer}
@@ -455,7 +457,7 @@ const customStyles = {
                     <>
                       <h4 className='pseudo_print_calendar' >{planning.pseudo}</h4>
                         <Calendar 
-                          messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", month: 'Mois', work_week:'Semaine' }}
+                          messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", month: 'Mois', work_week:'Semaine', allDay:'Jounée complète' }}
                           selectable={'ignoreEvents'}
                           views={[ 'month', 'work_week' ]}
                           defaultView={'work_week'}
@@ -483,6 +485,7 @@ const customStyles = {
                             }
                           }
                           formats={deleteHourEvent}
+                          style={{ height: 650 }}
                           components={{
                             work_week:{
                               header: colorHeaderDate,

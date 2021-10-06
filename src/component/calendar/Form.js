@@ -16,7 +16,7 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
     const [end, setEnd] = useState(detail ? detail.end : endEvent);
     const [ct, setCt] = useState(detail ? detail.ct : false);
     const [car, setCar] = useState(detail ? detail.car : false);
-    const [urgent, setUrgent] = useState(false);
+    const [urgent, setUrgent] = useState( detail && detail.color === "#FF0000" ? true : false);
     const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
@@ -64,13 +64,22 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
     useEffect(() => {
        if(loadPlanning) {
            setPlanning(userPlanning);
-           setLoadPlanning(false)
+           setLoadPlanning(false);
        }
+
+       if(startEvent){
+           if(startEvent.getHours() === 0){
+                startEvent.setHours(8);
+                endEvent.setHours(19);
+                endEvent.setUTCDate(endEvent.getUTCDate()- 1);
+           }
+
+        }
 
        urgent ? setColor('#FF0000') : setColor('#F0F0F0'); 
 
        
-    },[userPlanning, dispatch, loadPlanning, setPlanning, urgent])
+    },[userPlanning, dispatch, loadPlanning, setPlanning, urgent, startEvent, endEvent])
     
     const localizer = momentLocalizer(moment);
 
@@ -166,7 +175,7 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
                         onChange={e => setCar(e.target.checked)} checked={car} />
                         <label htmlFor='car'>Prêt véhicule</label>
                         <br/>
-                        <input type='checkbox' id='urgent' name='urgent' onChange={e => setUrgent(e.target.checked)} />
+                        <input type='checkbox' id='urgent' name='urgent' onChange={e => setUrgent(e.target.checked)} checked={urgent} />
                         <label for="urgent" >Urgent</label>
                         <br/>
                         <input type='submit' value='Envoyer' />
