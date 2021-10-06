@@ -69,7 +69,9 @@
         margin-top: 0;
     }
     h4{
-        margin-top: 0;
+        margin-top: 15px;
+        margin-bottom: 0;
+        border: 1px solid black;
     }
 }
 
@@ -203,7 +205,28 @@
 
 .button_modify_end_modal{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+}
+
+
+.button_navigate_full{
+    display: flex;
+    justify-content: space-around;
+    button{
+        padding: 7px;
+        border-radius: 5px;
+        background-color: white;
+        font-size: 12px;
+        cursor: pointer;
+        border: 1px solid black;
+    }
+    h4{
+        margin: 0;
+        border: none;
+    }
+    button:hover{
+        background-color: rgb(97, 95, 95);
+    }
 }
 
 @media print{
@@ -212,6 +235,14 @@
     }
     .btn_print{
         display: none;
+    }
+    .button_navigate_full{
+        display: none;
+    }
+    .container_fullCalendar{
+        h4{
+            margin-top: 0       
+        }
     }
     @page { margin: 0; }
     h4{

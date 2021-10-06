@@ -6,9 +6,6 @@ import localization from 'moment/locale/fr';
 import Modal from 'react-modal';
 import { ImCross } from 'react-icons/im';
 import { BiPrinter } from 'react-icons/bi';
-
-
-
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { isEmpty } from '../Utils';
 import Form from './Form';
@@ -49,6 +46,8 @@ const customStyles = {
     const [pseudo, setPseudo] = useState('');
     const [displayInputUser, setDisplayInputUser] = useState(false);
     const [errorCreateUser, setErrorCreateUser] = useState('');
+    const [time, setTime] = useState(new Date());
+    const [labelWeek, setLabelWeek] = useState('');
 
     useEffect(() => {
       eventCalendar[user] && setPlanning(eventCalendar[user])
@@ -283,8 +282,20 @@ const customStyles = {
         </div>
       )
     }
-
     
+    
+    const handleNavigateNext = () => {
+     setTime(new Date(time.setUTCDate(time.getUTCDate() + 7 )));    
+    }
+
+    const handleNavigatePrev = () => {
+     setTime(new Date(time.setUTCDate(time.getUTCDate() - 7 )));    
+    }
+
+    const customeToolbar = (props) => {
+      setLabelWeek(props.label);
+      return ''
+    }
     
     return (
       <div>
@@ -408,14 +419,25 @@ const customStyles = {
                   )}
                   </Modal>
                   {fullCalendar ? (
-                    <div className='container_fullCalendar'  >
-                        { eventCalendar.map(event => 
+                    <div className='container_fullCalendar' >
+                      <div className='button_navigate_full' >
+                        <div >
+                          <button onClick={() => setTime(new Date())} >Aujourd'hui</button>
+                          <button onClick={handleNavigatePrev} >Précédent</button>
+                          <button onClick={handleNavigateNext} >Suivant</button>
+                        </div>
                         <div>
+                          <h4>{labelWeek}</h4>
+                        </div>
+                      </div >
+                        { eventCalendar.map(event => 
+                        <div >
                           <h4>{event.pseudo}</h4>
                           <Calendar
                             messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", month: 'Mois', work_week:'Semaine', allDay:'Jounée complete' }}
                             views={[ 'work_week' ]}
                             defaultView={'work_week'}
+                            date={new Date(time)}
                             localizer={localizer}
                             events={event.planning.map(mapToRBCFormat)}
                             onSelectSlot={ e => handleSelect(e)}
@@ -444,8 +466,9 @@ const customStyles = {
                             style={{ height: 350 }}
                             components={{
                               work_week:{
-                                header: colorHeaderDate,
-                              }
+                                header: colorHeaderDate
+                              },
+                              toolbar : customeToolbar
                             }}
                           />
                         </div>
@@ -491,6 +514,7 @@ const customStyles = {
                               header: colorHeaderDate,
                             }
                           }}
+                          
                           />
                     </>
                   )}
