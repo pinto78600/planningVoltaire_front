@@ -49,13 +49,13 @@ const customStyles = {
     const [errorCreateUser, setErrorCreateUser] = useState('');
     const [time, setTime] = useState(new Date());
     const [labelWeek, setLabelWeek] = useState('');
-    const [counterSession, setCounterSession] = useState(1800000);
+    const [counterSession, setCounterSession] = useState(1800);
 
 
     useEffect(() => {
       eventCalendar[user] && setPlanning(eventCalendar[user]);
       
-      setCounterSession(1800000);
+      setCounterSession(1800);
       
     },[eventCalendar, user, fullCalendar])
 

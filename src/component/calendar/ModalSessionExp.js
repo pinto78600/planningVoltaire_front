@@ -20,6 +20,7 @@ const ModalSessionExp = ({counterSession, setCounterSession}) => {
 
     useEffect(() => {
   
+      try{
         const interval = setTimeout(() => {
           counterSession > 0 && setCounterSession(counterSession - 1);
         }, 1000);
@@ -29,6 +30,9 @@ const ModalSessionExp = ({counterSession, setCounterSession}) => {
         return () => {
           clearInterval(interval)
         }
+      }catch(err){
+        console.log(err);
+      }
               
     },[counterSession, setCounterSession])
     
