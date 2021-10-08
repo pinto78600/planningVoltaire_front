@@ -14,6 +14,7 @@ import ChangeColor from './ChangeColor';
 
 import '../index.scss';
 import axios from 'axios';
+import ModalSessionExp from './ModalSessionExp';
 
 const localizer = momentLocalizer(moment);
 
@@ -48,13 +49,15 @@ const customStyles = {
     const [errorCreateUser, setErrorCreateUser] = useState('');
     const [time, setTime] = useState(new Date());
     const [labelWeek, setLabelWeek] = useState('');
+    const [counterSession, setCounterSession] = useState(1800000);
+
 
     useEffect(() => {
-      eventCalendar[user] && setPlanning(eventCalendar[user])
-            
-    },[eventCalendar, user])
-
-   
+      eventCalendar[user] && setPlanning(eventCalendar[user]);
+      
+      setCounterSession(1800000);
+      
+    },[eventCalendar, user, fullCalendar])
 
         
     const openModal = () => {
@@ -299,6 +302,7 @@ const customStyles = {
     
     return (
       <div>
+        <ModalSessionExp  counterSession={counterSession} setCounterSession={setCounterSession} />
         {displayInputUser && (
                           
           <div className='form_create_user' >
@@ -434,7 +438,7 @@ const customStyles = {
                         <div >
                           <h4>{event.pseudo}</h4>
                           <Calendar
-                            messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", month: 'Mois', work_week:'Semaine', allDay:'Jounée complete' }}
+                            messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", work_week:'Semaine', allDay:'Jounée complete' }}
                             views={[ 'work_week' ]}
                             defaultView={'work_week'}
                             date={new Date(time)}
@@ -480,9 +484,9 @@ const customStyles = {
                     <>
                       <h4 className='pseudo_print_calendar' >{planning.pseudo}</h4>
                         <Calendar 
-                          messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", month: 'Mois', work_week:'Semaine', allDay:'Jounée complète' }}
+                          messages={{ next: 'Suivant', previous: 'Précédent', today: "Aujourd'hui", work_week:'Semaine', allDay:'Jounée complète' }}
                           selectable={'ignoreEvents'}
-                          views={[ 'month', 'work_week' ]}
+                          views={[ 'work_week' ]}
                           defaultView={'work_week'}
                           localizer={localizer}
                           events={planning.planning.map(mapToRBCFormat)}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { editEvent, getUser, postEvent } from '../../actions/users.actions';
+import { editEvent, getUser, getUsers, postEvent } from '../../actions/users.actions';
 
 const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEvent, endEvent, min, max, setLoadCalendarEdit, loadCalendarEdit }) => {
     const [name, setName] = useState(detail ? detail.name : '');
@@ -77,8 +77,9 @@ const Form = ({planning, id, closeModal, setPlanning, setLoad, detail, startEven
         }
 
        urgent ? setColor('#FF0000') : setColor('#F0F0F0'); 
-
-       
+        
+       dispatch(getUsers());
+              
     },[userPlanning, dispatch, loadPlanning, setPlanning, urgent, startEvent, endEvent])
     
     const localizer = momentLocalizer(moment);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteEvent, getUser } from '../../actions/users.actions';
+import { deleteEvent, getUser, getUsers } from '../../actions/users.actions';
 
 const Delete = ({ setPlanning, modalCloseDetails, userId, eventId, setLoad }) => {
 
@@ -28,7 +28,9 @@ const Delete = ({ setPlanning, modalCloseDetails, userId, eventId, setLoad }) =>
             setPlanning(userPlanning);
             setLoadPlanning(false)
         }
-     },[userPlanning, loadPlanning, setPlanning])
+        dispatch(getUsers());
+
+     },[userPlanning, loadPlanning, setPlanning, dispatch])
  
 
     

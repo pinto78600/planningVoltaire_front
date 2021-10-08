@@ -229,6 +229,22 @@
     }
 }
 
+.modal_session_expire{
+    h1{
+        color: red;
+    }
+
+    button{
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover{
+        background-color: gray;
+    }
+
+    text-align: center;
+}
+
 @media print{
     .headerCalendar{
         display: none;
