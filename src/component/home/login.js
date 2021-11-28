@@ -25,13 +25,13 @@ const Login = () => {
                     <label htmlFor='email'>Pseudo</label>
                     <br/>
                     <input type='text' name='pseudo' id='pseudo' 
-                        onChange={e => setPseudo(e.target.value)} value={pseudo}/>
+                        onChange={e => setPseudo(e.target.value)} value={pseudo} placeholder="Ecrire pseudo..." />
                     <div className='email error'></div>
                     <br/>
                     <label htmlFor='password'>Mot de passe</label>
                     <br/>
                     <input type='password' name='password' id='password' 
-                        onChange={e => setPassword(e.target.value)} value={password}/>
+                        onChange={e => setPassword(e.target.value)} value={password} placeholder="Ecrire mot de passe..."/>
                     <p style={{color : 'red'}} >{error}</p>
                     <br/>
                     <input className= 'btnFormLogin' type='submit' value='Connecter' />

@@ -41,6 +41,7 @@
     border-radius: 5px;
     margin-top: 5%;
     font-size: 20px;
+    width: 80%;
 }
 
 .btnFormLogin{
@@ -104,12 +105,14 @@
     }
     input:last-of-type{
         padding: 5px;
+        width: 100%;
+        cursor: pointer;
     }
     select{
         margin: 10px;
     }
     textarea{
-        padding: 10px;
+        padding: 13px;
         font-size: 15px;
     }
 }

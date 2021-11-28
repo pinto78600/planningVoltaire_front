@@ -27,6 +27,8 @@ const customStyles = {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       backgroundColor : '#FFFF00',
+      maxHeight: '80%',
+      maxWidth:'80%',
     },
   };
 
@@ -359,22 +361,24 @@ const customStyles = {
                     style={customStyles}
                     
                     >
-                    <ImCross className='closeModal' onClick={closeModal} size='1em'/>
-                    <h2>Prise de rendez-vous</h2>
-                    <Form 
-                      id={planning._id} 
-                      closeModal={closeModal} 
-                      setPlanning={setPlanning}
-                      setLoad={setLoad}
-                      detail={detailView}
-                      planning={planning}
-                      startEvent={startEvent}
-                      endEvent={endEvent}
-                      min={minTime}
-                      max={maxTime}
-                      setLoadCalendarEdit={setLoadCalendarEdit}
-                      loadCalendarEdit={loadCalendarEdit}
-                      />
+                    <div>
+                      <ImCross className='closeModal' onClick={closeModal} size='1em'/>
+                      <h2>Prise de rendez-vous</h2>
+                      <Form 
+                        id={planning._id} 
+                        closeModal={closeModal} 
+                        setPlanning={setPlanning}
+                        setLoad={setLoad}
+                        detail={detailView}
+                        planning={planning}
+                        startEvent={startEvent}
+                        endEvent={endEvent}
+                        min={minTime}
+                        max={maxTime}
+                        setLoadCalendarEdit={setLoadCalendarEdit}
+                        loadCalendarEdit={loadCalendarEdit}
+                        />
+                    </div>
                   </Modal>
                   <Modal
                     isOpen={modalIsOpenDetails}
