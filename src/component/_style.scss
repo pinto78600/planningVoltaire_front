@@ -33,7 +33,7 @@
     display: flex;
     justify-content: center;
     text-align: center;
-    margin: 30%;
+    // margin: 30%;
     margin-top: 10%;
 }
 
@@ -52,6 +52,11 @@
 .btnFormLogin:hover{
     transform: scale(1.1);
         
+}
+.containerLogin{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .containerLogin h1{
